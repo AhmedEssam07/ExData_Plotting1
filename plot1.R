@@ -1,14 +1,13 @@
 library(lubridate)
-alldata<- read.table("household_power_consumption.txt",skip = 1, sep = ";",na.strings = "?")
-names(alldata) <- c("Date","Time","Global_active_power","Global_reactive_power","Voltage","Global_intensity","Sub_metering_1","Sub_metering_2","Sub_metering_3")
-alldata$Date<- as.Date(alldata$Date)
-DataOfConcern<- subset(alldata, alldata$Date =="01-02-2007"|alldata$Date =="02-02-2007")
+#Reading all data
+power <- read.table("household_power_consumption.txt",skip=1,sep=";")
 
-DataOfConcern<- DataOfConcern[!is.na(DataOfConcern$Global_active_power),]
+#Naming all coloumns
+names(power) <- c("Date","Time","Global_active_power","Global_reactive_power","Voltage","Global_intensity","Sub_metering_1","Sub_metering_2","Sub_metering_3")
 
-
-hist(DataOfConcern$Global_active_power,xlab = "Global Active Power (KiloWatts)",ylab = "Frequency", main = "Global Active Power",col = "red")
-
+#extracting our data of concern
+subpower <- subset(power,power$Date=="1/2/2007" | power$Date =="2/2/2007")
+hist(subpower$Global_active_power,xlab = "Global Active Power (KiloWatts)",ylab = "Frequency", main = "Global Active Power",col = "red")
 
 png(filename = "plot1.png")
 dev.off()
